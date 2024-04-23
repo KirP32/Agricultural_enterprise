@@ -69,21 +69,22 @@ app.get('/api/entry/:i', (req, res) => {
     ORDER BY
     Секция_Идентификатор ASC;`;
     }
-    else if (i == '2')
-    {
-        str = `select * from Затраты`;
+    else if (i == '2') {
+        str = `SELECT * FROM Затраты
+        ORDER BY Идентификатор ASC;
+        `;
     }
-     pool.query(
-            str,
-            (err, result) => {
-                if (err) {
-                    console.error('Error executing query:', err);
-                    res.status(500).json({ error: 'Internal Server Error' });
-                } else {
-                    res.json(result.rows);
-                }
+    pool.query(
+        str,
+        (err, result) => {
+            if (err) {
+                console.error('Error executing query:', err);
+                res.status(500).json({ error: 'Internal Server Error' });
+            } else {
+                res.json(result.rows);
             }
-        );
+        }
+    );
 });
 
 
