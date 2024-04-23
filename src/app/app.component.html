@@ -1,0 +1,36 @@
+<div class="container">
+    <nav>
+        <div class="wrapper">
+            <a class="wrapper__logo" routerLink="logo" href="#">
+                <div class="wrapper__logo__text">
+                    <h4>Натуральное</h4>
+                    <h5>Животноводство</h5>
+                </div>
+                <img src="../assets/images/pngwing.com.png" alt="">
+            </a>
+            <div class="nav__wrapper">
+                <ul>
+                    <li><a routerLink="main" href="#">Главная</a></li>
+                    <li><a routerLink="finance" href="#">Финансы</a></li>
+                    <li><a routerLink="career" href="#">Карьера</a></li>
+                    <li><a routerLink="food" href="#">Продукты</a></li>
+                    <li class="Request"><a routerLink="request" href="#">Request DB</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="main">
+        <router-outlet></router-outlet>
+    </div>
+    <div class="footer">
+        <span>© 2024-∞ Ничьи права не защищены</span>
+        <div class="social">
+            <h4>Наши социальные сети</h4>
+            <div class="social__container">
+                <fa-icon [icon]="iconVK" class="active"></fa-icon>
+                <fa-icon [icon]="insta" class="active"></fa-icon>
+                <fa-icon [icon]="yotube" class="active"></fa-icon>
+            </div>
+        </div>
+    </div>
+</div>

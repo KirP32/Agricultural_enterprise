@@ -1,0 +1,54 @@
+<div class="container__finances">
+    <p style="font-weight: 900;">Добро пожаловать в наш финансовый отдел! <br> Пожалуйста, выберите интересующую вас
+        информацию </p>
+    <div class="container__finances__chooses">
+        <div class="item">
+            <h3>Затраты</h3>
+            <div class="item__container">
+                <button mat-flat-button class="item__container__button">По временам года</button>
+                <button mat-flat-button class="item__container__button">По секциям</button>
+                <button mat-flat-button class="item__container__button">Подробно(ред.)</button>
+            </div>
+        </div>
+        <div class="item">
+            <h3>Выручка</h3>
+            <div class="item__container">
+                <button mat-flat-button class="item__container__button">По временам года</button>
+                <button mat-flat-button class="item__container__button">По породе</button>
+                <button mat-flat-button class="item__container__button">Подробно(ред.)</button>
+            </div>
+        </div>
+        <div class="item">
+            <h3>Прибыль</h3>
+            <div class="item__container">
+                <button mat-flat-button class="item__container__button">По временам года</button>
+                <button mat-flat-button class="item__container__button">Подробно(ред.)</button>
+            </div>
+        </div>
+    </div>
+    <div class="container__finances__layout">
+        <!-- @for (item of array; track item) {
+        <div class="item__wrapper" (click)="edit_item(item)">
+            <h4 class="season">Время года: {{item["Время_года"]}}</h4>
+            <h4 class="section">Затраты в секциях: {{item["Секция_идентификатор"]}}</h4>
+            <h4 class="cost">Объем_затрат: {{item["Объем_затрат"]}}</h4>
+        </div>
+        } -->
+        <ng-container *ngFor="let item of array; track: item">
+            <ng-container *ngIf="item['Время_года']">
+                <div class="item__wrapper">
+                    <h4 class="season__time">Время года: <span class="normal__weight">{{item["Время_года"]}}</span></h4>
+                    <h4 class="season__section">Затраты в секциях: <span class="normal__weight">{{item["Секция_идентификатор"]}}</span></h4>
+                    <h4 class="season__cost">Объем_затрат: <span class="normal__weight">{{item["Объем_затрат"]}} руб.</span></h4>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="item['Секция_Идентификатор']">
+                <div class="item__wrapper">
+                    <h4 class="section__section">Секция: <span class="normal__weight">{{item["Секция_Идентификатор"]}}</span></h4>
+                    <h4 class="section__cost">Объем: <span class="normal__weight">{{item["Объем_затрат"]}} руб.</span></h4>
+                    <h4 class="section__info">Описание(сумма): <span class="normal__weight">{{item["Описание_Затрат_и_Сумма"]}}</span></h4>
+                </div>
+            </ng-container>
+        </ng-container>
+    </div>
+</div>

@@ -1,0 +1,126 @@
+* {
+    box-sizing: border-box;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 80px 1fr 150px;
+    grid-template-areas:
+        "header"
+        "main"
+        "footer";
+}
+nav {
+    position: fixed;
+    width: 100%;
+    height: 80px;
+    box-shadow: 0 4px 10px rgba($color: #000000, $alpha: 0.1);
+    background-color: hsl(0, 0%, 80%);
+    z-index: 99;
+    .wrapper {
+        height: inherit;
+        display: flex;
+        position: relative;
+        margin: auto;
+        align-items: center;
+        line-height: 0px;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 18px;
+        &__logo {
+            margin-left: 250px;
+            text-decoration: none;
+            color: black;
+            display: flex;
+            &__text {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                & h4 {
+                    padding: 5px;
+                    margin: 0;
+                }
+                & h5 {
+                    padding: 5px;
+                    margin: 0;
+                    margin-top: 10px;
+                }
+            }
+            & img {
+                width: 80px;
+                height: 80px;
+            }
+        }
+    }
+}
+.wrapper__main {
+    display: flex;
+    flex-direction: column;
+}
+ul {
+    list-style-type: none;
+    margin-left: 0;
+    padding-left: 0;
+    li {
+        display: inline-flex;
+        padding: 30px;
+        a {
+            font-size: 18px;
+            text-decoration: none;
+            color: black;
+        }
+        &:hover {
+            opacity: 0.8;
+            background-color: hsl(60, 100%, 80%);
+            border-radius: 16px;
+            height: 50px;
+            transition: all 0.3s ease-in-out;
+        }
+    }
+}
+.Request {
+    margin-right: 100px;
+}
+
+.header {
+    grid-area: header;
+}
+.main {
+    grid-area: main;
+    height: 120dvh;
+}
+.footer {
+    grid-area: footer;
+    background-color: hsl(30, 64%, 75%);
+    border-top: 5px solid black;
+    & span {
+        padding-top: 25px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        color: red;
+    }
+}
+
+.social {
+    display: flex;
+    flex-direction: column;
+    place-items: center;
+    margin-top: 5px;
+    & h4 {
+        padding: 0;
+        padding-left: 15px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+    &__container {
+        display: flex;
+        gap: 15px;
+        font-size: 25px;
+        & .active {
+            cursor: pointer;
+        }
+    }
+}

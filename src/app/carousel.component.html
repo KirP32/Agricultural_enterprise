@@ -1,0 +1,12 @@
+<div *ngIf="images" class="carousel">
+    <img *ngFor="let image of images; let i = index" [src]="image.imageSrc" [class.image-active]="selectedIndex === i">
+    
+    <div class="container-dot">
+        @for (item of images; track $index) {
+            <span class="dot" [ngClass]="{'dot-active': selectedIndex === $index}" (click)="dotClicked($index)"></span>
+        }
+    </div>
+    <button class="a"><span class="material-symbols-outlined arrow arrow__left" (click)="leftClicked()">arrow_circle_left</span></button>
+    <button class="b"><span class="material-symbols-outlined arrow arrow__right"(click)="rightClicked()">arrow_circle_right</span></button>
+    
+</div>
