@@ -1,0 +1,89 @@
+<div class="container__offspring">
+    <div class="container__offspring__info">
+        <h3>Вам предоставляется инструмент <br> отслеживания состояния здоровья и возраста молодняка</h3>
+    </div>
+    <div class="container__offspring__main">
+        <div class="container__offspring__main__layot offspring__info">
+            <h3>Проверить состояние здоровья</h3>
+            <button mat-flat-button (click)="showHealh()">Проверить</button>
+        </div>
+        <div class="container__offspring__main__layot offspring__info">
+            <h3>Отслеживание возраста молодняка</h3>
+            <button mat-flat-button (click)="showAge()">Отследить</button>
+        </div>
+        <div class="container__offspring__main__layot offspring__info">
+            <h3>Режим редактирования</h3>
+            <button mat-flat-button (click)="showRedacting()">Ред.</button>
+            <span class="material-symbols-outlined add__button" (click)="addBreed()">
+                add
+            </span>
+        </div>
+    </div>
+    <div class="container__layout" id="changemargin">
+        <ng-container *ngIf="array[0] && array[0]['Здоров']">
+            <div class="container__health">
+                <input matInput id="myInput" (input)="handleInput()" placeholder="Порода или ID">
+                <div class="container__health__good checes">
+                    <h4 class="health__title">Здоровые</h4>
+                    <ng-container *ngFor="let good of array_good">
+                        <h4>{{good}}</h4>
+                    </ng-container>
+                </div>
+                <div class="container__health__ill checes">
+                    <h4 class="health__title">Больные</h4>
+                    <ng-container *ngFor="let good of array_bad">
+                        <h4>{{good}}</h4>
+                    </ng-container>
+                </div>
+                <div class="container__health__very-low checes">
+                    <h4 class="health__title health__title__special">Критическое состояние</h4>
+                    <ng-container *ngFor="let good of array_verylow">
+                        <h4>{{good}}</h4>
+                    </ng-container>
+                </div>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="array[0] && (array[0]['Лет'] || array[0]['Месяцев'])">
+            <input matInput id="ageInput" (input)="ageInput()" placeholder="Порода или ID">
+            <div class="container__layout__grid">
+                <ng-container *ngFor="let item of array">
+                    <div class="item__wrapper">
+                        <h4 class="offspring__id">Идентификатор: <span
+                                class="normal__weight">{{item["Идентификатор"]}}</span>
+                        </h4>
+                        <h4 class="offspring__breed">Порода: <span class="normal__weight">{{item["Порода"]}}</span></h4>
+                        <h4 class="season__age">Возраст: <span class="normal__weight">{{item["Лет"]}}
+                                лет и {{item["Месяцев"]}} месяцев.</span></h4>
+                        <h4>Дата рождения: <span class="normal__weight">{{formatDate(item["Дата рождения"])}}</span>
+                        </h4>
+                    </div>
+                </ng-container>
+            </div>
+        </ng-container>
+
+        <ng-container *ngIf="array[0] && (array[0]['Идентификатор_Родитель'])">
+            <div class="container__layout__grid">
+                <input matInput id="breedInput" (input)="breedInput()" placeholder="Порода или ID">
+                <ng-container *ngFor="let item of array">
+                    <div class="item__wrapper" (click)="changebreed(item)">
+                        <h4 class="offspring__id">Идентификатор: <span
+                                class="normal__weight">{{item   ["Идентификатор"]}}</span>
+                        </h4>
+                        <h4 class="offspring__breed">Порода(пол): <span
+                                class="normal__weight">{{item["Порода"]}}({{item["Пол"]}})</span></h4>
+                        <h4 class="season__age">ID родителя: <span
+                                class="normal__weight">{{item['Идентификатор_Родитель']}}</span></h4>
+                        <h4>Дата рождения: <span class="normal__weight">{{formatDate(item["Дата рождения"])}}</span>
+                        </h4>
+                        <h4 class="offspring__id">Здоровье: <span class="normal__weight">{{item["Здоровье"]}}</span>
+                        </h4>
+                        <span class="material-symbols-outlined delete__button" (click)="deleteitem(item)">
+                            delete
+                        </span>
+                    </div>
+                </ng-container>
+            </div>
+        </ng-container>
+    </div>
+</div>

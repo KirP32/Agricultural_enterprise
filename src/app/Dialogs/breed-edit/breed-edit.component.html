@@ -1,0 +1,43 @@
+<div class="wrapper">
+    <h1 mat-dialog-title class="headline">Запись в БД</h1>
+    <div mat-dialog-content>
+
+        <form [formGroup]="cost" class="wrapper__form">
+
+            <mat-form-field>
+                <mat-label>Идентификатор родителя</mat-label>
+                <input matInput formControlName="cost_info" type="number">
+            </mat-form-field>
+
+            <br>
+
+            <mat-form-field>
+                <mat-label>Порода</mat-label>
+                <input type="text" matInput formControlName="cost_section">
+            </mat-form-field>
+
+            <br>
+
+            <mat-form-field>
+                <mat-label>Пол</mat-label>
+                <input matInput formControlName="cost_sex">
+            </mat-form-field>
+
+            <br>
+
+            <mat-form-field>
+                <mat-label>Дата</mat-label>
+                <input type="text" matInput formControlName="cost_number">
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Здоровье</mat-label>
+                <input type="text" matInput formControlName="cost_job">
+            </mat-form-field>
+        </form>
+    </div>
+    <div mat-dialog-actions class="action__buttons">
+        <button mat-button class="button item item__cancel" (click)="onNoClick()">Cancel</button>
+        <button mat-button class="button item item__ok" (click)="onOK()">Ok</button>
+    </div>
+</div>

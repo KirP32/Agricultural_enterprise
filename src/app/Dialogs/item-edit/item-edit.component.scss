@@ -1,0 +1,55 @@
+.headline {
+    text-align: center;
+}
+
+.action__buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    place-items: center;
+    padding: 10px;
+}
+.button {
+    border: none;
+    border-radius: 20px;
+    height: 40px;
+    padding: 0px 24px 0px 24px;
+}
+.item {
+    position: relative;
+    isolation: isolate;
+    max-height: 40px;
+    width: 150px;
+    &::before {
+        content: " ";
+        position: absolute;
+        z-index: -1;
+        background: currentColor;
+        inset: 0;
+        opacity: var(--state-layer-opacity, 0);
+        border-radius: 20px;
+    }
+    &:hover {
+        --state-layer-opacity: 0.25;
+    }
+    &__ok {
+        background-color: lightgreen;
+    }
+}
+:host {
+    background-color: black !important;
+}
+
+::ng-deep .mat-mdc-dialog-container .mdc-dialog__surface {
+    --mdc-dialog-container-shape: 28px;
+}
+
+// ::ng-deep .mat-mdc-text-field-wrapper {
+// }
+
+.wrapper {
+    width: 350px;
+    &__form {
+        display: flex;
+        flex-direction: column;
+    }
+}

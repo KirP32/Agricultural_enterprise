@@ -69,13 +69,17 @@
     }
     &__layout {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
         grid-template-rows: repeat(auto-fill, 175px);
-        gap: 32px;
+        gap: 18px;
         padding: 15px;
         margin-left: 20px;
         min-width: 250px;
-        margin-top: 50px;
+        margin-top: 0px;
+        overflow-y: auto;
+        padding-top: 0px;
+        z-index: 5;
+        position: relative;
     }
 }
 
@@ -117,7 +121,7 @@
     align-self: center;
 }
 .item {
-    justify-content: center;
+    padding: 15px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -132,11 +136,13 @@
         }
     }
     &__wrapper {
+        border-radius: 8px;
         background-color: hsl(0, 0%, 75%);
         text-align: center;
         display: grid;
         grid-template-rows: 25px auto auto;
         min-width: fit-content;
+        position: relative;
     }
     &__wrapper2 {
         grid-template-rows: auto auto auto auto;
@@ -148,6 +154,16 @@
         & h4 {
             margin: 0;
             align-self: center;
+        }
+    }
+    &__help {
+        width: 100%;
+        padding-top: 15px;
+        place-content: center;
+        display: flex;
+        gap: 25px;
+        &__first {
+            margin-left: 10px;
         }
     }
 }
@@ -163,4 +179,33 @@
 }
 .normal__weight {
     font-weight: normal;
+}
+
+.add__button {
+    // position: relative;
+    // top: 37px;
+    // left: -103px;
+    // font-size: 30px;
+    cursor: pointer;
+}
+.question__button {
+    // position: absolute;
+    // top: 294px;
+    // left: 435px;
+    cursor: pointer;
+    font-size: 24px;
+}
+.question__button2 {
+    position: absolute;
+    top: 294px;
+    left: 978px;
+    cursor: pointer;
+    font-size: 24px;
+}
+.delete__button {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    opacity: 0.5;
+    cursor: pointer;
 }

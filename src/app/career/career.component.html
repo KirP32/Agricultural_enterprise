@@ -1,0 +1,41 @@
+<div class="container__career">
+    <div class="container__career__info">
+        <h3>Тут вы можете взаимодействовать с информацией наших сотрудников <br> <span>(конечно, они дали согласие на
+                это 😄)</span></h3>
+    </div>
+    <div class="container__career__main">
+        <div class="container__career__main__cash career career__info">
+            <h3>Сколько зарабатывают наши сотрудинки?</h3>
+            <button mat-flat-button (click)="showCash()">Узнать</button>
+        </div>
+        <div class="container__career__main__employe career__info">
+            <h3>Просмотреть и редактировать сотрудников</h3>
+            <button mat-flat-button (click)="showEmploye()">Просмотреть</button>
+            <span class="material-symbols-outlined add__button" (click)="addEmploye()">
+                add
+            </span>
+        </div>
+    </div>
+    <div class="container__career__layout">
+        <ng-container *ngFor="let element of array">
+            <p *ngIf="element['X']" class="container__career__layout__text">Всего наши сотрудники зарабатывают
+                <span>{{element['X']}}</span> руб., что является <span>{{element['Y']}}%</span> от всех наших затрат
+                (<span>{{element['Z']}}</span> руб.)
+            </p>
+        </ng-container>
+        <div class="container__career__layout__wrapper">
+            <ng-container *ngFor="let element of array_employe">
+                <div class="employe__wrapper" (click)="changeEmploye(element)">
+                    <h4>ФИО: <span>{{element["Фамилия"] + " " + element["Имя, отчество"]}}</span></h4>
+                    <h4>Тел.: <span>{{element["Номер телефона"]}}</span></h4>
+                    <h4>Должность: <span>{{element["Должность"]}}</span></h4>
+                    <h4>Оклад: <span>{{element["Оклад"]}}</span></h4>
+                    <span class="material-symbols-outlined delete__button" (click)="deleteitem(element)">
+                        delete
+                    </span>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+
+</div>

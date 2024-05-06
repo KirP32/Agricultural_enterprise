@@ -38,7 +38,7 @@ export class MyComponentComponent implements OnInit {
   constructor(private httpClient: HttpClient) { }
 
   ngOnInit(): void {
-    this.getItems();
+    //this.getItems();
   }
 
   showMessage(): void {

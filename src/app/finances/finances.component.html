@@ -9,6 +9,14 @@
                 <button mat-flat-button class="item__container__button">По секциям</button>
                 <button mat-flat-button class="item__container__button">Подробно(ред.)</button>
             </div>
+            <div class="item__help item__help__first">
+                <span class="material-symbols-outlined add__button" (click)="addCost()">
+                    add
+                </span>
+                <span class="material-symbols-outlined question__button" (click)="alertIndexes()">
+                    question_mark
+                </span>
+            </div>
         </div>
         <div class="item">
             <h3>Выручка</h3>
@@ -17,29 +25,41 @@
                 <button mat-flat-button class="item__container__button">По породе</button>
                 <button mat-flat-button class="item__container__button">Подробно(ред.)</button>
             </div>
+            <div class="item__help">
+                <span class="material-symbols-outlined add__button" (click)="addGain()">
+                    add
+                </span>
+            </div>
         </div>
         <div class="item">
             <h3>Прибыль</h3>
             <div class="item__container">
                 <button mat-flat-button class="item__container__button">По временам года</button>
-                <button mat-flat-button class="item__container__button">Подробно(ред.)</button>
             </div>
         </div>
     </div>
     <div class="container__finances__layout">
-        <ng-container *ngFor="let item of array; track: item">
-            <ng-container *ngIf="item['Время_года']">
+        <ng-container *ngFor="let item of array;">
+            <ng-container *ngIf="item['Время_года'] && !item['Прибыль']">
                 <div class="item__wrapper">
                     <h4 class="season__time">Время года: <span class="normal__weight">{{item["Время_года"]}}</span></h4>
-                    <h4 class="season__section">Затраты в секциях: <span class="normal__weight">{{item["Секция_идентификатор"]}}</span></h4>
-                    <h4 class="season__cost">Сумма_затрат: <span class="normal__weight">{{item["Объем_затрат"]}} руб.</span></h4>
+                    <h4 *ngIf="item['Объем_затрат']" class="season__section">Затраты в секциях: <span
+                            class="normal__weight">{{item["Секция_идентификатор"]}}</span></h4>
+                    <h4 *ngIf="item['Объем_затрат']" class="season__cost">Сумма_затрат: <span
+                            class="normal__weight">{{item["Объем_затрат"]}} руб.</span></h4>
+                    <h4 *ngIf="item['Живность_id']">Сумма: <span class="normal__weight">{{item["Сумма"]}}</span></h4>
+                    <h4 *ngIf="item['Живность_id']">Живность(ID): <span
+                            class="normal__weight">{{item["Живность_id"]}}</span></h4>
                 </div>
             </ng-container>
             <ng-container *ngIf="item['Описание_Затрат_и_Сумма']">
                 <div class="item__wrapper">
-                    <h4 class="section__section">Секция: <span class="normal__weight">{{item["Секция_Идентификатор"]}}</span></h4>
-                    <h4 class="section__cost">Сумма: <span class="normal__weight">{{item["Объем_затрат"]}} руб.</span></h4>
-                    <h4 class="section__info">Описание(сумма): <span class="normal__weight">{{item["Описание_Затрат_и_Сумма"]}}</span></h4>
+                    <h4 class="section__section">Секция: <span
+                            class="normal__weight">{{item["Секция_Идентификатор"]}}</span></h4>
+                    <h4 class="section__cost">Сумма: <span class="normal__weight">{{item["Объем_затрат"]}} руб.</span>
+                    </h4>
+                    <h4 class="section__info">Описание(сумма): <span
+                            class="normal__weight">{{item["Описание_Затрат_и_Сумма"]}}</span></h4>
                 </div>
             </ng-container>
             <ng-container *ngIf="item['Идентификатор']">
@@ -47,7 +67,27 @@
                     <h4 class="section__section">Описание: <span class="normal__weight">{{item["Описание"]}}</span></h4>
                     <h4 class="edit__cost">Сумма: <span class="normal__weight">{{item["Сумма"]}} руб.</span></h4>
                     <h4 class="edit__date">Дата: <span class="normal__weight">{{formatDate(item["Дата"])}}</span></h4>
-                    <h4 class="edit__section">Секция: <span class="normal__weight">{{item["Секция_Идентификатор"]}}</span></h4>
+                    <h4 *ngIf="item['Секция_Идентификатор']" class="edit__section">Секция: <span
+                            class="normal__weight">{{item["Секция_Идентификатор"]}}</span></h4>
+                    <h4 *ngIf="item['Животное_Идентификатор']">Животное(ID): <span
+                            class="normal__weight">{{item["Животное_Идентификатор"]}}</span></h4>
+                    <span class="material-symbols-outlined delete__button" (click)="deleteitem(item)">
+                        delete
+                    </span>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="item['Порода']">
+                <div class="item__wrapper item__wrapper2">
+                    <h4 class="section__section">Порода: <span class="normal__weight">{{item["Порода"]}}</span></h4>
+                    <h4 class="edit__cost">Выручка: <span class="normal__weight">{{item["Объем_выручки"]}} руб.</span>
+                    </h4>
+                    <h4 class="edit__date">Дата: <span class="normal__weight">{{formatDate(item["Дата"])}}</span></h4>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="item['Прибыль']">
+                <div class="item__wrapper item__wrapper2">
+                    <h4 class="season__time">Время года: <span class="normal__weight">{{item["Время_года"]}}</span></h4>
+                    <h4 class="season__time">Прибыль: <span class="normal__weight">{{item["Прибыль"]}} руб.</span></h4>
                 </div>
             </ng-container>
         </ng-container>
