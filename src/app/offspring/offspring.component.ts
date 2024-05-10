@@ -26,6 +26,7 @@ export class OffspringComponent {
   rez2 = <any>[];
   rez3 = <any>[];
   array_age = <any>[];
+  message = `/message.txt`;
   constructor(private httpClient: HttpClient, private dialog: MatDialog) {
 
   }
@@ -243,5 +244,26 @@ export class OffspringComponent {
       );
     }
     this.array = temple;
+  }
+  print_doc(): void {
+    this.post_report(this.array).subscribe({
+      next: () => {
+        const download = (path: string, filename: string) => {
+          const link = document.createElement('a');
+          link.href = path;
+          link.download = filename;
+
+          link.dispatchEvent(new MouseEvent('click'));
+        };
+        download('/assets/report.xlsx', 'Report.xlsx');
+      },
+      error: (_: any) => {
+        alert(_);
+      }
+    });
+  }
+  post_report(item: any): any {
+    console.log('post report called');
+    return this.httpClient.post<any>(environment.api + `report`, JSON.stringify(item), { headers: { 'Content-Type': 'application/json' } })
   }
 }

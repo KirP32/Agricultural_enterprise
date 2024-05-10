@@ -8,6 +8,8 @@
                 <button mat-flat-button class="item__container__button">По временам года</button>
                 <button mat-flat-button class="item__container__button">По секциям</button>
                 <button mat-flat-button class="item__container__button">Подробно(ред.)</button>
+                <button mat-flat-button class="item__container__button__special" (click)="showChoosenDate(13)">По
+                    дате</button>
             </div>
             <div class="item__help item__help__first">
                 <span class="material-symbols-outlined add__button" (click)="addCost()">
@@ -37,8 +39,15 @@
                 <button mat-flat-button class="item__container__button">По временам года</button>
             </div>
         </div>
-    </div>
-    <div class="container__finances__layout">
+    </div>  
+    <div class="container__finances__layout" id="finances__layout">
+        <div class="container__input" *ngIf="array[0] && array[0]['Описание_Затраты']">
+            <h4>c даты</h4>
+            <input type="date" id="dateInputX" class="input" placeholder="Формат: 2015-08-11">
+            <h4>по дату</h4>
+            <input type="date" id="dateInputY" class="input" placeholder="Формат: 2015-08-11">
+            <button mat-flat-button class="item__container__button__special" (click)="searchData()">Найти</button>
+        </div>
         <ng-container *ngFor="let item of array;">
             <ng-container *ngIf="item['Время_года'] && !item['Прибыль']">
                 <div class="item__wrapper">
@@ -88,6 +97,17 @@
                 <div class="item__wrapper item__wrapper2">
                     <h4 class="season__time">Время года: <span class="normal__weight">{{item["Время_года"]}}</span></h4>
                     <h4 class="season__time">Прибыль: <span class="normal__weight">{{item["Прибыль"]}} руб.</span></h4>
+                </div>
+            </ng-container>
+            <ng-container *ngIf="item['Описание_Затраты']">
+                <div class="item__wrapper">
+                    <h4 class="season__time">Дата: <span class="normal__weight">{{formatDate(item["Дата"])}}</span></h4>
+                    <h4 *ngIf="item['Описание_Затраты']" class="season__section">Описание: <span
+                            class="normal__weight">{{item["Описание_Затраты"]}}</span></h4>
+                    <h4 *ngIf="item['Сумма']" class="season__cost">Сумма: <span class="normal__weight">{{item["Сумма"]}}
+                            руб.</span></h4>
+                    <h4 *ngIf="item['Секция_Идентификатор']">Затрата в секции: <span
+                            class="normal__weight">{{item["Секция_Идентификатор"]}}</span></h4>
                 </div>
             </ng-container>
         </ng-container>

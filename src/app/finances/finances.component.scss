@@ -79,7 +79,8 @@
         overflow-y: auto;
         padding-top: 0px;
         z-index: 5;
-        position: relative;
+        height: 750px;
+        width: 87%;
     }
 }
 
@@ -129,13 +130,25 @@
         text-align: center;
     }
     &__container {
+        justify-content: center;
+        place-items: center;
+        width: 578px;
         display: flex;
         gap: 10px;
         &__button {
             height: 25px;
+            &__special {
+                height: 25px;
+            }
         }
     }
     &__wrapper {
+        & > * {
+            margin: 10px;
+
+            place-items: center;
+            place-content: center;
+        }
         border-radius: 8px;
         background-color: hsl(0, 0%, 75%);
         text-align: center;
@@ -208,4 +221,22 @@
     right: 0;
     opacity: 0.5;
     cursor: pointer;
+}
+.container__input {
+    position: absolute;
+    display: flex;
+    margin-top: -56px;
+    justify-content: center;
+    align-items: center;
+    left: 30%;
+    gap: 15px;
+}
+.input {
+    height: 20px;
+    border-radius: 4px;
+    border: none;
+}
+
+input:focus {
+    outline: none;
 }

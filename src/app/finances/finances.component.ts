@@ -40,6 +40,10 @@ export class FinancesComponent implements OnInit {
 
   showChoosen(i: number): void {
     this.special_inex = i;
+    const elem = document.getElementById('finances__layout');
+    if (elem) {
+      elem.style.marginTop = '0px';
+    }
     this.httpClient.get<any[]>(environment.api + `entry/${i}`).subscribe(
       (response) => {
         this.array = response;
@@ -61,6 +65,62 @@ export class FinancesComponent implements OnInit {
       (heading as HTMLHeadingElement).style.color = colors[index];
     });
   }
+  showChoosenDate(i: number): void {
+    this.special_inex = i;
+    const elem = document.getElementById('finances__layout');
+    if (elem) {
+      elem.style.marginTop = '80px';
+    }
+    const param1 = '2000-01-01';
+    const param2 = '2025-01-01';
+    this.httpClient.get<any[]>(`${environment.api}showdate/${i}?param1=${param1}&param2=${param2}`).subscribe(
+      (response) => {
+        this.array = response;
+      },
+      (error) => {
+        console.error('Error:', error);
+      }
+    );
+
+    const h3 = document.querySelectorAll('.item h3');
+    const colors = ['black', 'black', 'black'];
+    if ((i >= 0 && i <= 2) || i == 13) {
+      colors[0] = '#1ea01e';
+    } else if (i >= 3 && i <= 5) {
+      colors[1] = '#1ea01e';
+    } else {
+      colors[2] = '#1ea01e';
+    }
+    h3.forEach((heading, index) => {
+      (heading as HTMLHeadingElement).style.color = colors[index];
+    });
+  }
+
+  searchData(): void {
+    const param1 = document.getElementById('dateInputX') as HTMLInputElement;
+    const param2 = document.getElementById('dateInputY') as HTMLInputElement;
+    if (param1 && param2) {
+      this.httpClient.get<any[]>(`${environment.api}showdate/${0}?param1=${param1.value}&param2=${param2.value}`).subscribe(
+        (response) => {
+          if (response.length < 1) {
+            response.push(
+              {
+                "Дата": "999",
+                "Сумма": "Не найдено",
+                "Описание_Затраты": "Не найдено",
+                "Секция_Идентификатор": 'Не найдено'
+            }
+          );
+          }
+          this.array = response;
+        },
+        (error) => {
+          console.error('Error:', error);
+        }
+      );
+    }
+  }
+
   edit_item(item: any): void {
     if (this.flag1) {
       this.flag1 = false;
@@ -83,6 +143,7 @@ export class FinancesComponent implements OnInit {
 
   }
   formatDate(rawDate: string): string {
+    if (rawDate == '999') return 'Не найдено';
     const date = new Date(rawDate);
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');

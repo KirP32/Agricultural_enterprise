@@ -2,6 +2,9 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const port = process.env.PORT || 3000;
+const fs = require('fs');
+const path = require('path');
+
 app.use(express.json());
 app.use(cors());
 app.listen(port, () => {
@@ -199,6 +202,45 @@ app.get('/api/entry/:i', (req, res) => {
     else if (i == '12') {
         str = `SELECT * FROM Молодняк`;
     }
+    else if (i == '13') {
+        str = `SELECT 
+        Дата,
+        Сумма,
+        Описание as Описание_Затраты,
+        Секция_Идентификатор
+    FROM
+        Затраты
+    WHERE
+        Дата >= '2000-05-03' AND Дата < '2024-09-05';
+    `;
+    }
+    pool.query(
+        str,
+        (err, result) => {
+            if (err) {
+                console.error('Error executing query:', err);
+                res.status(500).json({ error: 'Internal Server Error' });
+            } else {
+                res.json(result.rows);
+            }
+        }
+    );
+});
+
+
+app.get('/api/showdate/:i', (req, res) => {
+    const i = req.params.i;
+    const param1 = req.query.param1;
+    const param2 = req.query.param2;
+    let str = `SELECT 
+    Дата,
+    Сумма,
+    Описание as Описание_Затраты,
+    Секция_Идентификатор
+    FROM
+        Затраты
+    WHERE
+        Дата >= '${param1}' AND Дата < '${param2}'`;
     pool.query(
         str,
         (err, result) => {
@@ -379,6 +421,46 @@ app.post('/api/breed', (req, res) => {
             }
         }
     );
+});
+
+app.post('/api/report', (req, res) => {
+    const XLSX = require('xlsx');
+
+    function formatDate(rawDate) {
+        if (!rawDate) return '';
+        const date = new Date(rawDate);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    }
+
+    const data = req.body;
+
+    const workbook = XLSX.utils.book_new();
+    const worksheet = XLSX.utils.json_to_sheet(data);
+
+    worksheet['!cols'] = [
+        { width: 20 },
+        { width: 20 },
+        { width: 30 },
+        { width: 10 },
+        { width: 10 }
+    ];
+
+    const dataArray = [];
+    data.forEach(item => {
+        item['Дата рождения'] = formatDate(item['Дата рождения']);
+        dataArray.push([item['Идентификатор'], item['Дата рождения'], item['Порода'], item['Лет'], item['Месяцев']]);
+    });
+
+    XLSX.utils.sheet_add_aoa(worksheet, dataArray, { origin: 'A2' });
+
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Данные');
+
+    const filePath = path.join(__dirname, 'src', 'assets', 'report.xlsx');
+    XLSX.writeFile(workbook, filePath);
+    res.status(200).json({ path: filePath });
 });
 
 app.delete('/api/entry/:id', (req, res) => {

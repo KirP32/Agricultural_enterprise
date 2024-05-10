@@ -78,7 +78,7 @@
             overflow-y: auto;
             padding-top: 0px;
             z-index: 5;
-            height: 822px;
+            height: 760px;
         }
     }
 }
@@ -142,4 +142,7 @@ input:focus {
     right: 0;
     opacity: 0.5;
     cursor: pointer;
+}
+.button__post {
+    left: 45.5%;
 }

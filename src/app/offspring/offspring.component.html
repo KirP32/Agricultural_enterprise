@@ -46,6 +46,7 @@
 
         <ng-container *ngIf="array[0] && (array[0]['Лет'] || array[0]['Месяцев'])">
             <input matInput id="ageInput" (input)="ageInput()" placeholder="Порода или ID">
+            <button class="button__post" mat-flat-button (click)="print_doc()">Сохранить отчёт</button>
             <div class="container__layout__grid">
                 <ng-container *ngFor="let item of array">
                     <div class="item__wrapper">
