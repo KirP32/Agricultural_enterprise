@@ -150,7 +150,7 @@ app.get('/api/entry/:i', (req, res) => {
     else if (i == '8') {
         str = `WITH 
         TotalSalary AS (
-            SELECT SUM(D.Оклад) AS X
+            SELECT SUM(S.Рабочие_часы * D.Оплата) AS X
             FROM Сотрудники S
             JOIN Должность D ON S.Должность = D.Название
         ),
@@ -164,12 +164,18 @@ app.get('/api/entry/:i', (req, res) => {
         Z AS "Z"
     FROM
         TotalSalary, TotalExpenses;
+    
     `;
     }
     else if (i == '9') {
-        str = `SELECT S.*, D.Оклад
-        FROM Сотрудники S
-        INNER JOIN Должность D ON S.Должность = D.Название;
+        str = `SELECT 
+        S.*,
+        D.Оплата * S.Рабочие_часы AS "Зарплата"
+    FROM 
+        Сотрудники S
+    INNER JOIN 
+        Должность D ON S.Должность = D.Название;
+    
         `;
     }
     else if (i == '10') {
@@ -295,11 +301,11 @@ app.put('/api/employe/:id', (req, res) => {
     const sex = req.body.sex;
     const number = (req.body.number);
     const job = req.body.job;
-    const money = (req.body.money);
-    str = `UPDATE Сотрудники SET Фамилия = $1, "Имя, отчество" = $2, Секция = $3, Пол = $4, "Номер телефона" = $5, Должность = $6 WHERE Идентификатор = $7 RETURNING *`;
+    const hours = (req.body.hours);
+    str = `UPDATE Сотрудники SET Фамилия = $1, "Имя, отчество" = $2, Секция = $3, Пол = $4, "Номер телефона" = $5, Должность = $6, Рабочие_часы = $7 WHERE Идентификатор = $8 RETURNING *`;
     pool.query(
         str,
-        [firstName, lastName, section, sex, number, job, id],
+        [firstName, lastName, section, sex, number, job, hours, id],
         (err, result) => {
             if (err) {
                 console.error('Error executing query:', err);
@@ -379,10 +385,11 @@ app.post('/api/employe', (req, res) => {
     const sex = req.body.sex;
     const number = (req.body.number);
     const job = req.body.job;
-    str = `INSERT INTO Сотрудники (Фамилия, "Имя, отчество", Секция, Пол, "Номер телефона", Должность) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`;
+    const hours = req.body.hours;
+    str = `INSERT INTO Сотрудники (Фамилия, "Имя, отчество", Секция, Пол, "Номер телефона", Должность, Рабочие_часы) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`;
     pool.query(
         str,
-        [firstName, lastName, section, sex, number, job],
+        [firstName, lastName, section, sex, number, job, hours],
         (err, result) => {
             if (err) {
                 console.error('Error executing query:', err);
@@ -423,9 +430,10 @@ app.post('/api/breed', (req, res) => {
     );
 });
 
-app.post('/api/report', (req, res) => {
+app.post('/api/report/:id', (req, res) => {
     const XLSX = require('xlsx');
-
+    const { id } = req.params;
+    let fileName = '';
     function formatDate(rawDate) {
         if (!rawDate) return '';
         const date = new Date(rawDate);
@@ -447,18 +455,28 @@ app.post('/api/report', (req, res) => {
         { width: 10 },
         { width: 10 }
     ];
-
     const dataArray = [];
     data.forEach(item => {
-        item['Дата рождения'] = formatDate(item['Дата рождения']);
-        dataArray.push([item['Идентификатор'], item['Дата рождения'], item['Порода'], item['Лет'], item['Месяцев']]);
+        const formattedItem = Object.values(item).map(value => {
+            if (typeof value === 'string' && (value.match(/-/g)?.length === 2 && !value.includes('+'))) {
+                return formatDate(value);
+            }
+            return value;
+        });
+        dataArray.push(formattedItem);
     });
 
     XLSX.utils.sheet_add_aoa(worksheet, dataArray, { origin: 'A2' });
 
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Данные');
 
-    const filePath = path.join(__dirname, 'src', 'assets', 'report.xlsx');
+    if (id == '1') fileName = 'breedAge.xlsx';
+    if (id == '2') fileName = 'Zatrati.xlsx';
+    if (parseInt(id) >= 3 && parseInt(id) <= 5) fileName = 'Revenue.xlsx';
+    else {
+        fileName = 'Employe.xlsx';
+    }
+    const filePath = path.join(__dirname, 'src', 'assets', fileName);
     XLSX.writeFile(workbook, filePath);
     res.status(200).json({ path: filePath });
 });

@@ -30,7 +30,6 @@ export class FinancesComponent implements OnInit {
     buttons.forEach((button, index) => {
       button.addEventListener('click', () => this.showChoosen(index));
     });
-    let special_index = 0;
     this.httpClient.get<any>(environment.api + `entry/${7}`).subscribe(
       (response) => {
         this.section_array = response[0]["Секция"].split(',').map(Number);
@@ -43,6 +42,10 @@ export class FinancesComponent implements OnInit {
     const elem = document.getElementById('finances__layout');
     if (elem) {
       elem.style.marginTop = '0px';
+    }
+    const elem2 = document.getElementById('container__input');
+    if (elem) {
+      elem.style.marginTop = '80px';
     }
     this.httpClient.get<any[]>(environment.api + `entry/${i}`).subscribe(
       (response) => {
@@ -109,8 +112,8 @@ export class FinancesComponent implements OnInit {
                 "Сумма": "Не найдено",
                 "Описание_Затраты": "Не найдено",
                 "Секция_Идентификатор": 'Не найдено'
-            }
-          );
+              }
+            );
           }
           this.array = response;
         },
@@ -233,5 +236,45 @@ export class FinancesComponent implements OnInit {
   }
   delete_help(item: any): Observable<any> {
     return this.httpClient.delete(environment.api + `entry/${item["Идентификатор"]}`, { body: item })
+  }
+  saveData(): void {
+    let number = 2;
+    this.post_report(this.array, number).subscribe({
+      next: () => {
+        const download = (path: string, filename: string) => {
+          const link = document.createElement('a');
+          link.href = path;
+          link.download = filename;
+
+          link.dispatchEvent(new MouseEvent('click'));
+        };
+        download('/assets/Zatrati.xlsx', 'Zatrati.xlsx');
+      },
+      error: (_: any) => {
+        alert(_);
+      }
+    });
+  }
+  post_report(item: any, number: number): any {
+    console.log('post report called for Затраты');
+    return this.httpClient.post<any>(environment.api + `report/${number}`, JSON.stringify(item), { headers: { 'Content-Type': 'application/json' } })
+  }
+  saveRevenue(): void {
+    let number = this.special_inex;
+    this.post_report(this.array, number).subscribe({
+      next: () => {
+        const download = (path: string, filename: string) => {
+          const link = document.createElement('a');
+          link.href = path;
+          link.download = filename;
+
+          link.dispatchEvent(new MouseEvent('click'));
+        };
+        download('/assets/Revenue.xlsx', 'Revenue.xlsx');
+      },
+      error: (_: any) => {
+        alert(_);
+      }
+    });
   }
 }

@@ -23,13 +23,17 @@
                 (<span>{{element['Z']}}</span> руб.)
             </p>
         </ng-container>
+        <div id="container__input" *ngIf="array_employe != null && array_employe.length > 0">
+            <button mat-flat-button (click)="saveEmploye()">Сохранить</button>
+        </div>
         <div class="container__career__layout__wrapper">
             <ng-container *ngFor="let element of array_employe">
                 <div class="employe__wrapper" (click)="changeEmploye(element)">
                     <h4>ФИО: <span>{{element["Фамилия"] + " " + element["Имя, отчество"]}}</span></h4>
                     <h4>Тел.: <span>{{element["Номер телефона"]}}</span></h4>
                     <h4>Должность: <span>{{element["Должность"]}}</span></h4>
-                    <h4>Оклад: <span>{{element["Оклад"]}}</span></h4>
+                    <h4>Зарплата: <span>{{element["Зарплата"]}}</span></h4>
+                    <h4>Часы/месяц: <span>{{element["Рабочие_часы"]}}</span></h4>
                     <span class="material-symbols-outlined delete__button" (click)="deleteitem(element)">
                         delete
                     </span>

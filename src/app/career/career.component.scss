@@ -63,7 +63,7 @@
     place-content: center;
     background-color: hsl(0, 0%, 75%);
     & h4 {
-        margin: 10px;
+        margin: 7px;
     }
     & h4 span {
         font-weight: normal;
@@ -81,4 +81,9 @@
     right: 0;
     opacity: 0.5;
     cursor: pointer;
+}
+
+#container__input {
+    justify-content: center;
+    display: flex;
 }

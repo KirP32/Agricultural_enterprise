@@ -39,7 +39,7 @@
                 <button mat-flat-button class="item__container__button">По временам года</button>
             </div>
         </div>
-    </div>  
+    </div>
     <div class="container__finances__layout" id="finances__layout">
         <div class="container__input" *ngIf="array[0] && array[0]['Описание_Затраты']">
             <h4>c даты</h4>
@@ -47,6 +47,10 @@
             <h4>по дату</h4>
             <input type="date" id="dateInputY" class="input" placeholder="Формат: 2015-08-11">
             <button mat-flat-button class="item__container__button__special" (click)="searchData()">Найти</button>
+            <button mat-flat-button class="item__container__button__special" (click)="saveData()">Сохранить</button>
+        </div>
+        <div class="container__input revenue" id="container__input" *ngIf="array[0] && (special_inex >= 3 && special_inex <= 5)">
+            <button mat-flat-button class="item__container__button__special" (click)="saveRevenue()">Сохранить</button>
         </div>
         <ng-container *ngFor="let item of array;">
             <ng-container *ngIf="item['Время_года'] && !item['Прибыль']">
@@ -109,6 +113,7 @@
                     <h4 *ngIf="item['Секция_Идентификатор']">Затрата в секции: <span
                             class="normal__weight">{{item["Секция_Идентификатор"]}}</span></h4>
                 </div>
+
             </ng-container>
         </ng-container>
     </div>

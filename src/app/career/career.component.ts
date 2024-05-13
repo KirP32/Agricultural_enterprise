@@ -105,5 +105,27 @@ export class CareerComponent {
   delete_help(item: any): Observable<any> {
     return this.httpClient.delete(environment.api + `employe/${item["Идентификатор"]}`)
   }
+  saveEmploye(): void {
+    let number = 6;
+    this.post_report(this.array_employe, number).subscribe({
+      next: () => {
+        const download = (path: string, filename: string) => {
+          const link = document.createElement('a');
+          link.href = path;
+          link.download = filename;
+
+          link.dispatchEvent(new MouseEvent('click'));
+        };
+        download('/assets/Employe.xlsx', 'Employe.xlsx');
+      },
+      error: (_: any) => {
+        alert(_);
+      }
+    });
+  }
+  post_report(item: any, number: number): any {
+    console.log('post report called for Employe');
+    return this.httpClient.post<any>(environment.api + `report/${number}`, JSON.stringify(item), { headers: { 'Content-Type': 'application/json' } })
+  }
 }
 

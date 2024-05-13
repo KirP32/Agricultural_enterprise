@@ -24,7 +24,7 @@ export class EmployeEditComponent implements OnInit {
     cost_sex: new FormControl<string>('', Validators.required),
     cost_number: new FormControl<number>(0, [Validators.required]),
     cost_job: new FormControl<string>('', [Validators.required, Validators.min(0)]),
-    cost_money: new FormControl<number>(0, [Validators.required, Validators.min(0)]),
+    cost_hours: new FormControl<number>(0, [Validators.required, Validators.min(0)]),
   });
 
   ngOnInit(): void {
@@ -34,6 +34,7 @@ export class EmployeEditComponent implements OnInit {
       this.cost.get('cost_sex')?.setValue(this.data["Пол"]);
       this.cost.get('cost_number')?.setValue(this.data["Номер телефона"]);
       this.cost.get('cost_job')?.setValue(this.data["Должность"]);
+      this.cost.get('cost_hours')?.setValue(this.data["Рабочие_часы"]);
     }
   }
   onNoClick(): void {
@@ -48,6 +49,7 @@ export class EmployeEditComponent implements OnInit {
         sex: this.cost.get("cost_sex")?.value ?? '',
         number: this.cost.get("cost_number")?.value ?? '',
         job: this.cost.get("cost_job")?.value ?? '',
+        hours: this.cost.get("cost_hours")?.value ?? '',
       }
       this.dialogRef.close(element);
     }
@@ -58,6 +60,7 @@ export class EmployeEditComponent implements OnInit {
         sex: this.cost.get("cost_sex")?.value ?? '',
         number: this.cost.get("cost_number")?.value ?? '',
         job: this.cost.get("cost_job")?.value ?? '',
+        hours: this.cost.get("cost_hours")?.value ?? '',
       }
       this.dialogRef.close(element);
     }

@@ -255,7 +255,7 @@ export class OffspringComponent {
 
           link.dispatchEvent(new MouseEvent('click'));
         };
-        download('/assets/report.xlsx', 'Report.xlsx');
+        download('/assets/breedAge.xlsx', 'breedAge.xlsx');
       },
       error: (_: any) => {
         alert(_);
@@ -264,6 +264,6 @@ export class OffspringComponent {
   }
   post_report(item: any): any {
     console.log('post report called');
-    return this.httpClient.post<any>(environment.api + `report`, JSON.stringify(item), { headers: { 'Content-Type': 'application/json' } })
+    return this.httpClient.post<any>(environment.api + `report/${1}`, JSON.stringify(item), { headers: { 'Content-Type': 'application/json' } })
   }
 }

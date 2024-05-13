@@ -68,8 +68,8 @@
                 <input matInput id="breedInput" (input)="breedInput()" placeholder="Порода или ID">
                 <ng-container *ngFor="let item of array">
                     <div class="item__wrapper" (click)="changebreed(item)">
-                        <h4 class="offspring__id">Идентификатор: <span
-                                class="normal__weight">{{item   ["Идентификатор"]}}</span>
+                        <h4 class="offspring__id">Идентификатор: <span class="normal__weight">{{item
+                                ["Идентификатор"]}}</span>
                         </h4>
                         <h4 class="offspring__breed">Порода(пол): <span
                                 class="normal__weight">{{item["Порода"]}}({{item["Пол"]}})</span></h4>
